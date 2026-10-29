@@ -16,8 +16,16 @@ $canonical = Join-Path $env:USERPROFILE ".dsh\plugins\dsh-rtk"
 $target = Join-Path $profileDir "node_modules\dsh-rtk"
 
 New-Item -ItemType Directory -Force -Path $canonical, $target | Out-Null
-Copy-Item -Recurse -Force (Join-Path $source "*") $canonical
-Copy-Item -Recurse -Force (Join-Path $canonical "*") $target
+
+# 只复制插件本体，跳过 .git 之类的开发残留
+function Copy-Plugin($from, $to) {
+	Get-ChildItem -Force $from | Where-Object { $_.Name -notin @('.git', '.gitignore', 'node_modules') } | ForEach-Object {
+		Copy-Item -Recurse -Force $_.FullName (Join-Path $to $_.Name)
+	}
+}
+
+Copy-Plugin $source $canonical
+Copy-Plugin $canonical $target
 Write-Host "已复制: $canonical"
 Write-Host "已复制: $target"
 
