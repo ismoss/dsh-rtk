@@ -1,0 +1,35 @@
+{
+  "name": "dsh-rtk",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness 插件：把 shell 命令先交给 rtk（rtk-ai.app）的改写引擎，命中就用 `rtk <命令>` 执行，用来省下工具输出吃掉的 token。补的是 dsh 侧缺的那一半——dsh 的 tools/pre-execute 只能 allow/deny、不能改参数，rtk 也还没有 --agent dsh。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node test/rewrite.test.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "cordis",
+    "rtk",
+    "token"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.1"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "license": "MIT"
+}
